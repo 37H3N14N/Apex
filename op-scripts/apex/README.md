@@ -22,10 +22,10 @@ search config file.
 
 > returns word radius text extracts of the keywords with the following attributes:
 
-- hostname
-- api path
-- http method
-- keyword
+- hostname or all
+- keyword search
+- word radius
+- request or response data
 
 ----------------------------------------
         Instructions

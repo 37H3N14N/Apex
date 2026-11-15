@@ -1,5 +1,7 @@
 {
 	"file_name":"current_ops.json",
-	"context_length":300,
-	"target_string":"Teaser.Link"
+	"context_length":70,
+	"target_string":"operationName",
+	"req_or_res": "req",
+	"host_or_all": ["host","hackerone.com"]
 }

@@ -22,7 +22,7 @@ def get_word_context(text, target_string, context_length):
 
 ###########################################################################
 
-def search_keyword_in_json_file(json_file_name,target_string,context_length):
+def search_keyword_in_json_file(json_file_name,target_string,context_length,host_or_all,req_or_res):
 
     with open(f'json-file/{json_file_name}', encoding= 'utf-8') as file:
         json_data = json.load(file)
@@ -37,39 +37,83 @@ def search_keyword_in_json_file(json_file_name,target_string,context_length):
         request_length = entity['length']
 
         #('------------------[REQUEST]----------------------')
-        decode_raw_request = base64.b64decode(entity['raw'])
+        if req_or_res == 'req':
 
-        try:
-            readable_raw_request = decode_raw_request.decode('utf-8')
-        except:
-            continue
+            try:
+                decode_raw_request = base64.b64decode(entity['raw'])
+                readable_raw_request = decode_raw_request.decode('utf-8')
+            except:
+                continue
 
-        if not entity['response']:
-            continue
+            found_data = get_word_context(
+                text=readable_raw_request, 
+                target_string=target_string, 
+                context_length=context_length)
+
+            if host_or_all[0] == 'all':
+                if found_data:
+                    single_exerpt = {
+                        'path': request_path,
+                        'host':host_name,
+                        'method': request_method,
+                        'size': request_length,
+                        'context_data_pool': found_data
+                    }
+                    all_exerpts_found.append(single_exerpt)
+
+            if host_or_all[0] == 'host':
+                if host_name == host_or_all[1]:
+                    if found_data:
+                        single_exerpt = {
+                            'path': request_path,
+                            'host':host_name,
+                            'method': request_method,
+                            'size': request_length,
+                            'context_data_pool': found_data
+                        }
+                        all_exerpts_found.append(single_exerpt)
+
+            if not entity['response']:
+                continue
 
         #('----------------[RESPONSE]------------------------')
-        decode_raw_response = base64.b64decode(entity['response']['raw'])
-        try:
-            readable_raw_response = decode_raw_response.decode('utf-8') 
-        except:
-            continue
+        if req_or_res == 'res':
 
-        found_data = get_word_context(
-            text=readable_raw_response, 
-            target_string=target_string, 
-            context_length=context_length)
+            try:
+                decode_raw_response = base64.b64decode(entity['response']['raw'])
+                readable_raw_response = decode_raw_response.decode('utf-8') 
+            except:
+                continue
 
-        if found_data:
-            single_exerpt = {
-                'path': request_path,
-                'host':host_name,
-                'method': request_method,
-                'size': request_length,
-                'context_data_pool': found_data
-            }
+            found_data = get_word_context(
+                text=readable_raw_response, 
+                target_string=target_string, 
+                context_length=context_length)
 
-            all_exerpts_found.append(single_exerpt)
-    
+            if host_or_all[0] == 'all':
+                if found_data:
+                    single_exerpt = {
+                        'path': request_path,
+                        'host':host_name,
+                        'method': request_method,
+                        'size': request_length,
+                        'context_data_pool': found_data
+                    }
+                    all_exerpts_found.append(single_exerpt)
+
+            if host_or_all[0] == 'host':
+                if host_name == host_or_all[1]:
+                    if found_data:
+                        single_exerpt = {
+                            'path': request_path,
+                            'host':host_name,
+                            'method': request_method,
+                            'size': request_length,
+                            'context_data_pool': found_data
+                        }
+                        all_exerpts_found.append(single_exerpt)
+
+
     return all_exerpts_found
 
 ###########################################################################
@@ -79,20 +123,27 @@ def search_results_returned(exerpt_list):
     if len(exerpt_list) == 0:
         print('no_match_found')
 
-
     item_count = 0
     for item in exerpt_list:
         item_count += 1
-        print(f'///////////////////////[ITEM NO.{item_count}]//////////////////////////')
-        print(f'[Path: {item['path']}], [Host: {item['host']}], [Method: {item['method']}], [Size: {item['size']}]')
+
+        print('=================================================')
+        print(f'----------- [ITEM NO.{item_count}] ---------------')
+        print('=================================================')
+
+        print(f'[Host]: {item['host']}, [Size]: {item['size']}, [Method]: {item['method']}')
+        print(f'[Path]: {item['path']}') 
+        print('----------------------------------------------------')
 
         for singular_context in item['context_data_pool']:
-            print('--------------------------------------------')
-            print(f'context_number: {singular_context['count']}')
-            print('--------------------------------------------')
-            print(f'context_data: {singular_context['match_item']}')
+
+            print(f'[context_number]: {singular_context['count']}') 
+            print(f'[context_data]: {singular_context['match_item']}')
+            print('***')
+
+        print('\n')
     
-###########################################################################
+
 ###########################################################################
 
 with open('search_config/search.json','r') as file:
@@ -102,13 +153,14 @@ with open('search_config/search.json','r') as file:
 search_result_list = search_keyword_in_json_file(
     json_file_name=search_detail['file_name'],
     target_string=search_detail['target_string'],
-    context_length=search_detail['context_length']
+    context_length=search_detail['context_length'],
+    req_or_res=search_detail['req_or_res'],
+    host_or_all=search_detail['host_or_all']
     )
 
 search_results_returned(search_result_list)
 
 
-###########################################################################
 ###########################################################################
 
 

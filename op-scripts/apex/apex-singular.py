@@ -84,21 +84,23 @@ def search_results_returned(exerpt_list):
     item_count = 0
     for item in exerpt_list:
         item_count =+ 1
-        print(f'///////////////////////[ITEM NO.{item_count}]//////////////////////////')
-        print(f'[Path: {item['path']}], [Host: {item['host']}], [Method: {item['method']}], [Size: {item['size']}]')
+        print(f'------------------- [ITEM NO.{item_count}] -------------------------')
+
+        print(f'[Host]: {item['host']}, [Size]: {item['size']}')
+        print(f'[Path]: {item['path']}, [Method]: {item['method']}')
+
 
         for singular_context in item['context_data_pool']:
             print('--------------------------------------------')
-            print(f'context_number: {singular_context['count']}')
-            print('--------------------------------------------')
-            print(f'context_data: {singular_context['match_item']}')
+
+            print(f'#### [context_number]: {singular_context['count']}')
+            print(f'[context_data]: {singular_context['match_item']}')
     
-###########################################################################
+
 ###########################################################################
 
 with open('search_config/search.json','r') as file:
     search_detail = json.load(file)
-
 
 search_result_list = search_keyword_in_json_file(
     json_file_name=search_detail['file_name'],
@@ -110,7 +112,6 @@ search_result_list = search_keyword_in_json_file(
 search_results_returned(search_result_list)
 
 
-###########################################################################
 ###########################################################################
 
 
