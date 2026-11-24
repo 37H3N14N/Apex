@@ -1,0 +1,7 @@
+{
+	"file_name":"neon_data.json",
+	"context_length":70,
+	"target_string":"ab",
+	"req_or_res": "req",
+	"hosts_or_all": ["hosts",["console-stage.neon.build"]]
+}

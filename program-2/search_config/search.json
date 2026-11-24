@@ -1,0 +1,7 @@
+{
+	"file_name":"neon_data.json",
+	"hosts_or_all": ["hosts",["console-stage.neon.buld"]],
+	"specific_uri_or_wildcard":["wildcard","/api/v2/projects"],
+	"synopsis_or_write_files":"synopsis",
+	"folder_destination_path": "TEMPORARY/Tab-2"
+}

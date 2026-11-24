@@ -22,9 +22,9 @@ def get_word_context(text, target_string, context_length):
 
 ###########################################################################
 
-def search_keyword_in_json_file(json_file_name,target_string,context_length,host_or_all,req_or_res):
+def search_keyword_in_json_file(json_file_name,target_string,context_length,hosts_or_all,req_or_res):
 
-    with open(f'json-file/{json_file_name}', encoding= 'utf-8') as file:
+    with open(f'../json-files/{json_file_name}', encoding= 'utf-8') as file:
         json_data = json.load(file)
 
     all_exerpts_found = []
@@ -50,7 +50,7 @@ def search_keyword_in_json_file(json_file_name,target_string,context_length,host
                 target_string=target_string, 
                 context_length=context_length)
 
-            if host_or_all[0] == 'all':
+            if hosts_or_all[0] == 'all':
                 if found_data:
                     single_exerpt = {
                         'path': request_path,
@@ -61,8 +61,8 @@ def search_keyword_in_json_file(json_file_name,target_string,context_length,host
                     }
                     all_exerpts_found.append(single_exerpt)
 
-            if host_or_all[0] == 'host':
-                if host_name == host_or_all[1]:
+            if hosts_or_all[0] == 'hosts':
+                if host_name in hosts_or_all[1]:
                     if found_data:
                         single_exerpt = {
                             'path': request_path,
@@ -90,7 +90,7 @@ def search_keyword_in_json_file(json_file_name,target_string,context_length,host
                 target_string=target_string, 
                 context_length=context_length)
 
-            if host_or_all[0] == 'all':
+            if hosts_or_all[0] == 'all':
                 if found_data:
                     single_exerpt = {
                         'path': request_path,
@@ -101,8 +101,8 @@ def search_keyword_in_json_file(json_file_name,target_string,context_length,host
                     }
                     all_exerpts_found.append(single_exerpt)
 
-            if host_or_all[0] == 'host':
-                if host_name == host_or_all[1]:
+            if hosts_or_all[0] == 'hosts':
+                if host_name in hosts_or_all[1]:
                     if found_data:
                         single_exerpt = {
                             'path': request_path,
@@ -155,7 +155,7 @@ search_result_list = search_keyword_in_json_file(
     target_string=search_detail['target_string'],
     context_length=search_detail['context_length'],
     req_or_res=search_detail['req_or_res'],
-    host_or_all=search_detail['host_or_all']
+    hosts_or_all=search_detail['hosts_or_all']
     )
 
 search_results_returned(search_result_list)
