@@ -24,8 +24,7 @@ def group_traffic_from_json_file(file_name,arg_write,arg_uri,arg_host):
 
         if arg_host[0] == 'hosts':
 
-            if str(host_name) in arg_host[1]:
-                print('hello')
+            if host_name in arg_host[1]:
                 
                 if arg_uri[0] == 'specific_uri':
                     uri_component_list = arg_uri[1].split("/")
