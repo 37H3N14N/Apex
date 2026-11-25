@@ -227,7 +227,7 @@ def organised_results_output(data_list,folder_destination):
         item_count = 1
 
         for key,value in data_list[0].items():
-            print(f'[ITEM_NO = {item_count}] | HOST = {key} | URIs_NO = {len(value)} ')
+            print(f'[ ITEM_NO = {item_count} ] | [ HOST = {key} ] | [ URIs_NO = {len(value)} ]')
             for one_uri in value:
                 print(f'[URI]: {one_uri}') 
             print('-----------------------------------')
