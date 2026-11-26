@@ -24,7 +24,7 @@ def get_word_context(text, target_string, context_length):
 
 def search_keyword_in_json_file(json_file_name,target_string,context_length,hosts_or_all,req_or_res):
 
-    with open(f'../json-files/{json_file_name}', encoding= 'utf-8') as file:
+    with open(f'apex/json-files/{json_file_name}', encoding= 'utf-8') as file:
         json_data = json.load(file)
 
     all_exerpts_found = []
@@ -146,7 +146,7 @@ def search_results_returned(exerpt_list):
 
 ###########################################################################
 
-with open('search_config/search.json','r') as file:
+with open('apex/program-1/search_config/search.json','r') as file:
     search_detail = json.load(file)
 
 

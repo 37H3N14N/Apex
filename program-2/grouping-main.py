@@ -8,7 +8,7 @@ from pathlib import Path
 
 def group_traffic_from_json_file(file_name,arg_write,arg_uri,arg_host):
 
-    with open(f'../json-files/{file_name}', encoding= 'utf-8') as file:
+    with open(f'apex/json-files/{file_name}', encoding= 'utf-8') as file:
         json_data = json.load(file)
 
 
@@ -263,7 +263,7 @@ def organised_results_output(data_list,folder_destination):
 
 ###########################################################################
 
-with open('search_config/search.json','r') as file:
+with open('apex/program-2/search_config/search.json','r') as file:
     search_detail = json.load(file)
 
 arg_folder_destination=search_detail['folder_destination_path']
